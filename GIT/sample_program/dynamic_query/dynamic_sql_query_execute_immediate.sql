@@ -3,7 +3,7 @@ DECLARE
     with_clause     CLOB;
     select_clause   CLOB;
     sql_query       CLOB;
-    table_name      VARCHAR2 (30) := 'CUSTOMERS';
+    table_name      VARCHAR2 (30) := 'EMPLOYEES';
     PROCEDURE pr_collist (pi_table_name   IN     VARCHAR2,
                           collist1           OUT CLOB,
                           my_str             OUT CLOB)
@@ -22,7 +22,7 @@ DECLARE
 
         --dbms_output.put_line('inside procedure collist:'||collist);
         OPEN CV FOR
-            SELECT    'select '
+            SELECT    'select ' 
                    || CASE
                           WHEN data_type NOT IN ('CHAR', 'VARCHAR2')
                           THEN
@@ -30,7 +30,8 @@ DECLARE
                           ELSE
                               column_name
                       END
-                   || ',count(1) from all_recs group by '
+                   || ',count(1),'''||column_name
+                   || ''' as fld from all_recs group by '
                    || column_name
                    || ' union all '
               FROM user_tab_cols
